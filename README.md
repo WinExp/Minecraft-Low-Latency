@@ -16,10 +16,10 @@ You can enable/disable low latency feature in config screen.
 
 - [ ] Autocorrect wait time
 
-#### Config Screen
+#### Config screen
 
-![Config Screen](docs/images/config_screen.png)
+![Config screen](https://raw.githubusercontent.com/WinExp/Minecraft-Low-Latency/refs/heads/master/docs/images/config_screen.png)
 
-#### F3 Debug Screen
+#### F3 Debug screen
 
-![F3 Debug Screen](docs/images/debug_screen.png)
+![F3 Debug screen](https://raw.githubusercontent.com/WinExp/Minecraft-Low-Latency/refs/heads/master/docs/images/debug_screen.png)

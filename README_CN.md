@@ -16,8 +16,8 @@
 
 #### 配置屏幕
 
-![配置屏幕](docs/images/config_screen.png)
+![配置屏幕](https://raw.githubusercontent.com/WinExp/Minecraft-Low-Latency/refs/heads/master/docs/images/config_screen.png)
 
 #### F3 调试屏幕
 
-![F3 屏幕](docs/images/debug_screen.png)
+![F3 屏幕](https://raw.githubusercontent.com/WinExp/Minecraft-Low-Latency/refs/heads/master/docs/images/debug_screen.png)
