@@ -80,7 +80,7 @@ jobs:
           fi
 
       - name: Sync Body to Modrinth
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         run: ./gradlew modrinthSyncBodyAll
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
