@@ -8,11 +8,6 @@ on:
         required: false
         type: boolean
 
-      force_sync_body:
-        description: "Force sync body"
-        required: false
-        type: boolean
-
   push:
     paths-ignore:
       - 'docs/*'
@@ -85,7 +80,7 @@ jobs:
           fi
 
       - name: Sync Body to Modrinth
-        if: ${{ (github.event_name == 'workflow_dispatch' && inputs.force_sync_body) || github.event_name == 'push' }}
+        if: ${{ github.event_name == 'push' }}
         run: ./gradlew modrinthSyncBodyAll
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
