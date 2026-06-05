@@ -62,13 +62,13 @@ jobs:
       - name: Get version from current commit
         id: current-version
         run: |
-          VERSION=$(sed -nE 's/^mod_version[[:space:]]*=[[:space:]]*(.*)$/\1/p' gradle.properties)
+          VERSION=$(sed -nE 's/^version[[:space:]]*=[[:space:]]*(.*)$/\1/p' gradle.properties)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Get version from previous commit
         id: previous-version
         run: |
-          VERSION=$(git show ${{ github.event.before }}:gradle.properties | sed -nE 's/^mod_version[[:space:]]*=[[:space:]]*(.*)$/\1/p')
+          VERSION=$(git show ${{ github.event.before }}:gradle.properties | sed -nE 's/^version[[:space:]]*=[[:space:]]*(.*)$/\1/p')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Compare versions
