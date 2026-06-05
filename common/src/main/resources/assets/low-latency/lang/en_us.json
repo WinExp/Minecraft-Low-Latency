@@ -1,4 +1,5 @@
 {
+  "text.autoconfig.low-latency.title": "Low Latency",
   "text.autoconfig.low-latency.option.enabled": "Enable low latency",
   "text.autoconfig.low-latency.option.wait_time_offset": "Wait time offset (ratio)"
 }
