@@ -10,7 +10,7 @@ This mod estimates input latency based on historical CPU and GPU frame times, an
 
 **This project is in its early stages, which may result in reduced frame rates or increased latency. You can adjust the ‘wait time offset’ in the config menu to alleviate this issue.**
 
-You can enable/disable low latency feature in config screen.
+You can enable/disable low latency feature in config menu.
 
 ### Roadmap
 
