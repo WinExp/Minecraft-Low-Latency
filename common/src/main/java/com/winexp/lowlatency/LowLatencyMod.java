@@ -1,7 +1,7 @@
 package com.winexp.lowlatency;
 
 import com.winexp.lowlatency.config.ModConfig;
-import com.winexp.lowlatency.gui.debug.DebugEntryLatency;
+import com.winexp.lowlatency.gui.debug.DebugEntryStatistics;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.minecraft.client.Minecraft;
@@ -25,7 +25,7 @@ public class LowLatencyMod {
     }
 
     public static void registerDebugScreenEntries(BiConsumer<Identifier, DebugScreenEntry> registrar) {
-        registrar.accept(asResource("latency"), new DebugEntryLatency());
+        registrar.accept(asResource("statistics"), new DebugEntryStatistics());
     }
 
     public static void onClientStopping(Minecraft client) {

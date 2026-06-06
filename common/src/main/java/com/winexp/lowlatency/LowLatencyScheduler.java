@@ -18,37 +18,27 @@ public class LowLatencyScheduler implements Closeable {
             GpuTimer::reset
     );
     private final Deque<GpuTimer> gpuTimerQueue = new ArrayDeque<>();
-    private GpuTimer currentGpuTimer = null;
     private final FrameTimeTracker cpuTimeTracker = new FrameTimeTracker(FRAME_SAMPLING_WINDOW);
-    private final FrameTimeTracker gpuTimeTracker = new FrameTimeTracker(FRAME_SAMPLING_WINDOW);
     private final FrameTimeTracker gpuLatencyTracker = new FrameTimeTracker(FRAME_SAMPLING_WINDOW);
+    public final Statistics statistics = new Statistics();
 
-    public long getAverageCpuTime() {
-        return cpuTimeTracker.getAverageFrameTime();
+    private long getAverageCpuTime() {
+        return cpuTimeTracker.getAverageTime();
     }
 
-    public long getAverageGpuTime() {
-        return gpuTimeTracker.getAverageFrameTime();
-    }
-
-    public long getAverageGpuLatency() {
-        return gpuLatencyTracker.getAverageFrameTime();
-    }
-
-    public int getQueueLength() {
-        return gpuTimerQueue.size();
-    }
-
-    public long getWaitTime() {
-        long waitTime = getAverageGpuLatency()
-                - getAverageCpuTime()
-                + (long) (LowLatencyMod.CONFIG.wait_time_offset * 1_000_000);
-        return waitTime > 0 ? waitTime : 0;
+    private long getAverageGpuLatency() {
+        return gpuLatencyTracker.getAverageTime();
     }
 
     public static void wait(LowLatencyScheduler scheduler) {
         if (!LowLatencyMod.CONFIG.enabled) return;
-        long waitTime = scheduler.getWaitTime();
+
+        LowLatencyMod.SCHEDULER.updateGpuStatus();
+        long waitTime = scheduler.getAverageGpuLatency()
+                - scheduler.getAverageCpuTime()
+                + (long) (LowLatencyMod.CONFIG.wait_time_offset * 1_000_000);
+        waitTime = waitTime > 0 ? waitTime : 0;
+        scheduler.statistics.waitTime = waitTime;
         if (waitTime <= 0) return;
         long target = System.nanoTime() + waitTime;
         while (true) {
@@ -74,23 +64,23 @@ public class LowLatencyScheduler implements Closeable {
     }
 
     public void recordGpuBegin() {
-        currentGpuTimer = gpuTimerPool.borrowObject();
-        currentGpuTimer.recordBegin();
+        GpuTimer gpuTimer = gpuTimerPool.borrowObject();
+        gpuTimer.recordBegin();
+        gpuTimerQueue.add(gpuTimer);
     }
 
     public void recordGpuEnd() {
-        currentGpuTimer.recordEnd();
-        gpuTimerQueue.add(currentGpuTimer);
-        currentGpuTimer = null;
+        GpuTimer gpuTimer = gpuTimerQueue.getLast();
+        gpuTimer.recordEnd();
     }
 
-    public void checkGpu() {
+    private void updateGpuStatus() {
         Iterator<GpuTimer> it = gpuTimerQueue.iterator();
         while (it.hasNext()) {
             GpuTimer gpuTimer = it.next();
             gpuTimer.updateResult();
             if (gpuTimer.getState() == GpuTimer.State.RESULT_AVAILABLE) {
-                gpuTimeTracker.addFrame(gpuTimer.getTimeElapsed());
+                statistics.gpuTimeTracker.addFrame(gpuTimer.getTimeElapsed());
                 gpuLatencyTracker.addFrame(gpuTimer.getLatency());
                 it.remove();
                 gpuTimerPool.returnObject(gpuTimer);
@@ -104,5 +94,39 @@ public class LowLatencyScheduler implements Closeable {
             gpuTimer.close();
         }
         gpuTimerPool.close();
+    }
+
+    public class Statistics {
+        private final FrameTimeTracker gpuTimeTracker = new FrameTimeTracker(FRAME_SAMPLING_WINDOW);
+
+        private long waitTime;
+        private long frameQueueBacklog;
+
+        public long getAverageCpuTime() {
+            return cpuTimeTracker.getAverageTime();
+        }
+
+        public long getAverageGpuTime() {
+            return gpuTimeTracker.getAverageTime();
+        }
+
+        public long getAverageGpuLatency() {
+            return gpuLatencyTracker.getAverageTime();
+        }
+
+        public long getWaitTime() {
+            return waitTime;
+        }
+
+        public long getFrameQueueBacklog() {
+            return frameQueueBacklog;
+        }
+
+        public void update(){
+            GpuTimer lastGpuTimer = gpuTimerQueue.getLast();
+            updateGpuStatus();
+            frameQueueBacklog = gpuTimerQueue.size();
+            if (gpuTimerQueue.contains(lastGpuTimer)) frameQueueBacklog--;
+        }
     }
 }

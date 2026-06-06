@@ -12,7 +12,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MinecraftMixin {
     @Inject(method = "run", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;pollEvents()V"))
     private void beforePoll(CallbackInfo ci) {
-        LowLatencyMod.SCHEDULER.checkGpu();
         LowLatencyScheduler.wait(LowLatencyMod.SCHEDULER);
     }
 
@@ -29,6 +28,7 @@ public class MinecraftMixin {
     @Inject(method = "renderFrame", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;flipFrame(Lcom/mojang/blaze3d/TracyFrameCapture;)V"))
     private void beforeFlip(boolean advanceGameTime, CallbackInfo ci) {
         LowLatencyMod.SCHEDULER.recordCpuEnd();
+        LowLatencyMod.SCHEDULER.statistics.update();
     }
 
     @Inject(method = "renderFrame", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;flipFrame(Lcom/mojang/blaze3d/TracyFrameCapture;)V", shift = At.Shift.AFTER))

@@ -10,10 +10,6 @@
 
 你可以在配置菜单中开启/关闭低延迟功能。
 
-### 规划
-
-- [ ] 自动修正等待时间
-
 #### 配置菜单
 
 ![配置菜单](https://raw.githubusercontent.com/WinExp/Minecraft-Low-Latency/refs/heads/master/docs/images/config_menu.png)

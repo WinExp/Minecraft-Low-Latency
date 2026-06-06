@@ -11,7 +11,7 @@ public class FrameTimeTracker {
         this.window = window;
     }
 
-    public long getAverageFrameTime() {
+    public long getAverageTime() {
         if (queue.isEmpty()) return 0;
         return sum / queue.size();
     }

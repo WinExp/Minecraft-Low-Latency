@@ -12,10 +12,6 @@ This mod estimates input latency based on historical CPU and GPU frame times, an
 
 You can enable/disable low latency feature in config menu.
 
-### Roadmap
-
-- [ ] Autocorrect wait time
-
 #### Config menu
 
 ![Config menu](https://raw.githubusercontent.com/WinExp/Minecraft-Low-Latency/refs/heads/master/docs/images/config_menu.png)
