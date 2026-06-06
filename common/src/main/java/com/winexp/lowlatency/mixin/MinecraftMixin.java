@@ -20,7 +20,7 @@ public class MinecraftMixin {
         LowLatencyMod.SCHEDULER.recordCpuBegin();
     }
 
-    @Inject(method = "renderFrame", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiling/Profiler;get()Lnet/minecraft/util/profiling/ProfilerFiller;", shift = At.Shift.AFTER))
+    @Inject(method = "renderFrame", at = @At("HEAD"))
     private void beforeRender(boolean advanceGameTime, CallbackInfo ci) {
         LowLatencyMod.SCHEDULER.recordGpuBegin();
     }
