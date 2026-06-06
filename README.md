@@ -1,6 +1,6 @@
 # Low Latency
 
-[中文](README_CN.md)
+[中文](https://github.com/WinExp/Minecraft-Low-Latency/blob/master/README_CN.md)
 
 This mod is designed to reduce input latency when the GPU is full load and the CPU is not, inspired by NVIDIA Reflex.
 
