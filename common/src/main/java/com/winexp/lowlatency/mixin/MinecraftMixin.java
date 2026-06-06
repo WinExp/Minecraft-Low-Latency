@@ -14,6 +14,10 @@ public class MinecraftMixin {
     private void beforePoll(CallbackInfo ci) {
         LowLatencyMod.SCHEDULER.checkGpu();
         LowLatencyScheduler.wait(LowLatencyMod.SCHEDULER);
+    }
+
+    @Inject(method = "run", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;pollEvents()V", shift = At.Shift.AFTER))
+    private void afterPoll(CallbackInfo ci) {
         LowLatencyMod.SCHEDULER.recordCpuBegin();
     }
 
