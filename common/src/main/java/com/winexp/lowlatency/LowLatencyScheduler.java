@@ -19,22 +19,22 @@ public class LowLatencyScheduler implements Closeable {
     );
     private final Deque<GpuTimer> gpuTimerQueue = new ArrayDeque<>();
     private final FrameTimeTracker cpuTimeTracker = new FrameTimeTracker(FRAME_SAMPLING_WINDOW);
-    private final FrameTimeTracker gpuCompletionDelayTracker = new FrameTimeTracker(FRAME_SAMPLING_WINDOW);
+    private final FrameTimeTracker gpuLatencyTracker = new FrameTimeTracker(FRAME_SAMPLING_WINDOW);
     public final Statistics statistics = new Statistics();
 
     private long getAverageCpuTime() {
         return cpuTimeTracker.getAverageTime();
     }
 
-    private long getAverageGpuCompletionDelay() {
-        return gpuCompletionDelayTracker.getAverageTime();
+    private long getAverageGpuLatency() {
+        return gpuLatencyTracker.getAverageTime();
     }
 
     public static void wait(LowLatencyScheduler scheduler) {
         if (!LowLatencyMod.CONFIG.enabled) return;
 
         LowLatencyMod.SCHEDULER.pollGpuState();
-        long waitTime = scheduler.getAverageGpuCompletionDelay()
+        long waitTime = scheduler.getAverageGpuLatency()
                 - scheduler.getAverageCpuTime()
                 + (long) (LowLatencyMod.CONFIG.wait_time_bias_ms * 1_000_000);
         waitTime = waitTime > 0 ? waitTime : 0;
@@ -82,7 +82,7 @@ public class LowLatencyScheduler implements Closeable {
             gpuTimer.pollResult();
             if (gpuTimer.getState() == GpuTimer.State.RESULT_AVAILABLE) {
                 statistics.gpuTimeTracker.addFrame(gpuTimer.getTimeElapsed());
-                gpuCompletionDelayTracker.addFrame(gpuTimer.getCompletionDelay());
+                gpuLatencyTracker.addFrame(gpuTimer.getCompletionDelay());
                 it.remove();
                 gpuTimerPool.returnObject(gpuTimer);
             } else break;
@@ -104,15 +104,15 @@ public class LowLatencyScheduler implements Closeable {
         private long frameQueueBacklog;
 
         public long getAverageCpuTime() {
-            return cpuTimeTracker.getAverageTime();
+            return LowLatencyScheduler.this.getAverageCpuTime();
         }
 
         public long getAverageGpuTime() {
             return gpuTimeTracker.getAverageTime();
         }
 
-        public long getAverageGpuCompletionDelay() {
-            return gpuCompletionDelayTracker.getAverageTime();
+        public long getAverageGpuLatency() {
+            return LowLatencyScheduler.this.getAverageGpuLatency();
         }
 
         public long getWaitTime() {
