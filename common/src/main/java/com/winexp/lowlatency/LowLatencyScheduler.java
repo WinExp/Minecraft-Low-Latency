@@ -40,7 +40,9 @@ public class LowLatencyScheduler implements Closeable {
     }
 
     public long getWaitTime() {
-        long waitTime = getAverageGpuLatency() - getAverageCpuTime();
+        long waitTime = getAverageGpuLatency()
+                - getAverageCpuTime()
+                + (long) (LowLatencyMod.CONFIG.wait_time_offset * 1_000_000);
         return waitTime > 0 ? waitTime : 0;
     }
 

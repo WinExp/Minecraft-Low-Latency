@@ -10,7 +10,7 @@ public class ModConfig implements ConfigData {
     public double wait_time_offset = 0;
 
     public void validatePostLoad() throws ValidationException {
-        if (wait_time_offset < -10 || wait_time_offset > 10)
-            throw new ValidationException("Wait time offset must be between -10 and 10");
+        if (wait_time_offset < -100 || wait_time_offset > 100)
+            throw new ValidationException("Wait time offset must be between -100 and 100");
     }
 }
