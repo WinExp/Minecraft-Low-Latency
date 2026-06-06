@@ -38,12 +38,12 @@ public class GpuTimer implements Closeable {
         return endTime - beginTime;
     }
 
-    public long getLatency() {
+    public long getCompletionDelay() {
         if (state != State.RESULT_AVAILABLE) return 0;
         return endTime - submitTime;
     }
 
-    public void updateResult() {
+    public void pollResult() {
         if (state != State.END_QUERIED) return;
         if (GL33C.glGetQueryObjecti64(beginQuery, GL15C.GL_QUERY_RESULT_AVAILABLE) == GL11C.GL_TRUE
                 && GL33C.glGetQueryObjecti64(endQuery, GL15C.GL_QUERY_RESULT_AVAILABLE) == GL11C.GL_TRUE) {
