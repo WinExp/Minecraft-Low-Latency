@@ -8,7 +8,7 @@ When the gpu is full load and the CPU is not, a frame queue backlog will build u
 
 This mod estimates input latency based on historical CPU and GPU frame times, and waits before input events to ensure the frame queue will not build up, which reduces input latency.
 
-**This project is in its early stages and may cause your frame rate to drop. You can set the 'Wait time offset' to -1 in the config menu to alleviate the problem, but it will increase input latency.**
+**This project is in its early stages, which may result in reduced frame rates and increased latency. You can adjust the ‘wait time offset’ in the config menu to alleviate this issue.**
 
 You can enable/disable low latency feature in config screen.
 
