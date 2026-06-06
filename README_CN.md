@@ -14,9 +14,9 @@
 
 - [ ] 自动修正等待时间
 
-#### 配置屏幕
+#### 配置菜单
 
-![配置屏幕](https://raw.githubusercontent.com/WinExp/Minecraft-Low-Latency/refs/heads/master/docs/images/config_screen.png)
+![配置菜单](https://raw.githubusercontent.com/WinExp/Minecraft-Low-Latency/refs/heads/master/docs/images/config_menu.png)
 
 #### F3 调试屏幕
 
