@@ -28,7 +28,7 @@ public class MinecraftMixin {
     @Inject(method = "renderFrame", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;flipFrame(Lcom/mojang/blaze3d/TracyFrameCapture;)V"))
     private void beforeFlip(boolean advanceGameTime, CallbackInfo ci) {
         LowLatencyMod.SCHEDULER.recordCpuEnd();
-        LowLatencyMod.SCHEDULER.statistics.update();
+        LowLatencyMod.SCHEDULER.statistics.updateFrameQueueBacklog();
     }
 
     @Inject(method = "renderFrame", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;flipFrame(Lcom/mojang/blaze3d/TracyFrameCapture;)V", shift = At.Shift.AFTER))

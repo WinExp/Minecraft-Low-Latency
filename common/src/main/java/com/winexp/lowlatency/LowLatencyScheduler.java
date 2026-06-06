@@ -122,7 +122,7 @@ public class LowLatencyScheduler implements Closeable {
             return frameQueueBacklog;
         }
 
-        public void update(){
+        public void updateFrameQueueBacklog(){
             GpuTimer lastGpuTimer = gpuTimerQueue.getLast();
             updateGpuStatus();
             frameQueueBacklog = gpuTimerQueue.size();
