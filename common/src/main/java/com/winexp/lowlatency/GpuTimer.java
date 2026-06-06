@@ -10,7 +10,9 @@ public class GpuTimer implements Closeable {
     private final int beginQuery = GL15C.glGenQueries(),
             endQuery = GL15C.glGenQueries();
     private State state = State.IDLE;
-    private long result;
+    private long beginTime;
+    private long endTime;
+    private long submitTime;
 
     public State getState() {
         return state;
@@ -25,28 +27,34 @@ public class GpuTimer implements Closeable {
     public void recordEnd() {
         if (state != State.BEGIN_QUERIED) throw new IllegalStateException();
         GL33C.glQueryCounter(endQuery, GL33C.GL_TIMESTAMP);
+        long[] t = new long[1];
+        GL33C.glGetInteger64v(GL33C.GL_TIMESTAMP, t);
+        submitTime = t[0];
         state = State.END_QUERIED;
     }
 
-    public long getTimeElapsedNs() {
+    public long getTimeElapsed() {
         if (state != State.RESULT_AVAILABLE) return 0;
-        return result;
+        return endTime - beginTime;
+    }
+
+    public long getLatency() {
+        if (state != State.RESULT_AVAILABLE) return 0;
+        return endTime - submitTime;
     }
 
     public void updateResult() {
         if (state != State.END_QUERIED) return;
         if (GL33C.glGetQueryObjecti64(beginQuery, GL15C.GL_QUERY_RESULT_AVAILABLE) == GL11C.GL_TRUE
                 && GL33C.glGetQueryObjecti64(endQuery, GL15C.GL_QUERY_RESULT_AVAILABLE) == GL11C.GL_TRUE) {
-            long beginTime = GL33C.glGetQueryObjecti64(beginQuery, GL15C.GL_QUERY_RESULT);
-            long endTime = GL33C.glGetQueryObjecti64(endQuery, GL15C.GL_QUERY_RESULT);
-            result = endTime - beginTime;
+            beginTime = GL33C.glGetQueryObjecti64(beginQuery, GL15C.GL_QUERY_RESULT);
+            endTime = GL33C.glGetQueryObjecti64(endQuery, GL15C.GL_QUERY_RESULT);
             state = State.RESULT_AVAILABLE;
         }
     }
 
     public void reset() {
         state = State.IDLE;
-        result = 0;
     }
 
     @Override

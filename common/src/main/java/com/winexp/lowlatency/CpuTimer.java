@@ -1,18 +1,18 @@
 package com.winexp.lowlatency;
 
 public class CpuTimer {
-    private long lastTime = System.nanoTime();
-    private long result;
+    private long startTime = System.nanoTime();
+    private long endTime = System.nanoTime();
 
     public void startRecord() {
-        lastTime = System.nanoTime();
+        startTime = System.nanoTime();
     }
 
     public void endRecord() {
-        result = System.nanoTime() - lastTime;
+        endTime = System.nanoTime();
     }
 
-    public long getTimeElapsedNs() {
-        return result;
+    public long getTimeElapsed() {
+        return endTime - startTime;
     }
 }

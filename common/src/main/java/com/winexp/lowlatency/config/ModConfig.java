@@ -7,7 +7,7 @@ import me.shedaniel.autoconfig.annotation.Config;
 @Config(name = LowLatencyMod.MOD_ID)
 public class ModConfig implements ConfigData {
     public boolean enabled = true;
-    public double wait_time_offset = -1;
+    public double wait_time_offset = 0;
 
     public void validatePostLoad() throws ValidationException {
         if (wait_time_offset < -10 || wait_time_offset > 10)

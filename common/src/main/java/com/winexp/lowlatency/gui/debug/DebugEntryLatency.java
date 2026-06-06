@@ -16,7 +16,8 @@ public class DebugEntryLatency implements DebugScreenEntry {
         displayer.addToGroup(MAIN, String.format("Low latency: %s", status));
         displayer.addToGroup(MAIN, String.format("Average CPU time: %.4f ms", LowLatencyMod.SCHEDULER.getAverageCpuTime() / 1_000_000.0));
         displayer.addToGroup(MAIN, String.format("Average GPU time: %.4f ms", LowLatencyMod.SCHEDULER.getAverageGpuTime() / 1_000_000.0));
-        displayer.addToGroup(MAIN, String.format("Estimated latency: %.4f ms", LowLatencyMod.SCHEDULER.getEstimatedLatency() / 1_000_000.0));
+        displayer.addToGroup(MAIN, String.format("Average GPU latency: %.4f ms", LowLatencyMod.SCHEDULER.getAverageGpuLatency() / 1_000_000.0));
+        displayer.addToGroup(MAIN, String.format("Wait time: %.4f ms", LowLatencyMod.SCHEDULER.getWaitTime() / 1_000_000.0));
         displayer.addToGroup(MAIN, String.format("Frame queue length: %d", LowLatencyMod.SCHEDULER.getQueueLength()));
     }
 }
