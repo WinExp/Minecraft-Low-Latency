@@ -17,22 +17,21 @@ public class MinecraftMixin {
 
     @Inject(method = "run", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;pollEvents()V", shift = At.Shift.AFTER))
     private void afterPoll(CallbackInfo ci) {
-        LowLatencyMod.SCHEDULER.recordCpuBegin();
+        LowLatencyMod.SCHEDULER.afterPoll();
     }
 
     @Inject(method = "renderFrame", at = @At("HEAD"))
     private void beforeRender(boolean advanceGameTime, CallbackInfo ci) {
-        LowLatencyMod.SCHEDULER.recordGpuBegin();
+        LowLatencyMod.SCHEDULER.beforeRender();
     }
 
     @Inject(method = "renderFrame", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;flipFrame(Lcom/mojang/blaze3d/TracyFrameCapture;)V"))
     private void beforeFlip(boolean advanceGameTime, CallbackInfo ci) {
-        LowLatencyMod.SCHEDULER.recordCpuEnd();
-        LowLatencyMod.SCHEDULER.statistics.updateFrameQueueBacklog();
+        LowLatencyMod.SCHEDULER.beforeClip();
     }
 
     @Inject(method = "renderFrame", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;flipFrame(Lcom/mojang/blaze3d/TracyFrameCapture;)V", shift = At.Shift.AFTER))
     private void afterFlip(boolean advanceGameTime, CallbackInfo ci) {
-        LowLatencyMod.SCHEDULER.recordGpuEnd();
+        LowLatencyMod.SCHEDULER.afterClip();
     }
 }

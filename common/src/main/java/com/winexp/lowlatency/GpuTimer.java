@@ -7,8 +7,8 @@ import org.lwjgl.opengl.GL33C;
 import java.io.Closeable;
 
 public class GpuTimer implements Closeable {
-    private final int beginQuery = GL15C.glGenQueries(),
-            endQuery = GL15C.glGenQueries();
+    private final int elapsedQuery = GL15C.glGenQueries();
+    private final int endQuery = GL15C.glGenQueries();
     private State state = State.IDLE;
     private long beginTime;
     private long endTime;
@@ -18,18 +18,23 @@ public class GpuTimer implements Closeable {
         return state;
     }
 
+    public long getTimestampNow() {
+        long[] t = new long[1];
+        GL33C.glGetInteger64v(GL33C.GL_TIMESTAMP, t);
+        return t[0];
+    }
+
     public void recordBegin() {
         if (state != State.IDLE) throw new IllegalStateException();
-        GL33C.glQueryCounter(beginQuery, GL33C.GL_TIMESTAMP);
+        GL15C.glBeginQuery(GL33C.GL_TIME_ELAPSED, elapsedQuery);
         state = State.BEGIN_QUERIED;
     }
 
     public void recordEnd() {
         if (state != State.BEGIN_QUERIED) throw new IllegalStateException();
+        GL15C.glEndQuery(GL33C.GL_TIME_ELAPSED);
         GL33C.glQueryCounter(endQuery, GL33C.GL_TIMESTAMP);
-        long[] t = new long[1];
-        GL33C.glGetInteger64v(GL33C.GL_TIMESTAMP, t);
-        submitTime = t[0];
+        submitTime = getTimestampNow();
         state = State.END_QUERIED;
     }
 
@@ -45,10 +50,11 @@ public class GpuTimer implements Closeable {
 
     public void pollResult() {
         if (state != State.END_QUERIED) return;
-        if (GL33C.glGetQueryObjecti64(beginQuery, GL15C.GL_QUERY_RESULT_AVAILABLE) == GL11C.GL_TRUE
+        if (GL33C.glGetQueryObjecti64(elapsedQuery, GL15C.GL_QUERY_RESULT_AVAILABLE) == GL11C.GL_TRUE
                 && GL33C.glGetQueryObjecti64(endQuery, GL15C.GL_QUERY_RESULT_AVAILABLE) == GL11C.GL_TRUE) {
-            beginTime = GL33C.glGetQueryObjecti64(beginQuery, GL15C.GL_QUERY_RESULT);
+            long elapsedTime = GL33C.glGetQueryObjecti64(elapsedQuery, GL15C.GL_QUERY_RESULT);
             endTime = GL33C.glGetQueryObjecti64(endQuery, GL15C.GL_QUERY_RESULT);
+            beginTime = endTime - elapsedTime;
             state = State.RESULT_AVAILABLE;
         }
     }
@@ -59,7 +65,7 @@ public class GpuTimer implements Closeable {
 
     @Override
     public void close() {
-        GL15C.glDeleteQueries(beginQuery);
+        GL15C.glDeleteQueries(elapsedQuery);
         GL15C.glDeleteQueries(endQuery);
     }
 

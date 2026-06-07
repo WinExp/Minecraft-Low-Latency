@@ -55,22 +55,23 @@ public class LowLatencyScheduler implements Closeable {
         }
     }
 
-    public void recordCpuBegin() {
+    public void afterPoll() {
         cpuTimer.startRecord();
     }
 
-    public void recordCpuEnd() {
+    public void beforeClip() {
         cpuTimer.endRecord();
         cpuTimeTracker.addFrame(cpuTimer.getTimeElapsed());
+        statistics.updateFrameQueueBacklog();
     }
 
-    public void recordGpuBegin() {
+    public void beforeRender() {
         GpuTimer gpuTimer = gpuTimerPool.borrowObject();
         gpuTimer.recordBegin();
         gpuTimerQueue.add(gpuTimer);
     }
 
-    public void recordGpuEnd() {
+    public void afterClip() {
         GpuTimer gpuTimer = gpuTimerQueue.getLast();
         gpuTimer.recordEnd();
     }
