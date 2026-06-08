@@ -15,8 +15,14 @@ modrinth {
     dependencies { // A special DSL for creating dependencies
         required.project "fabric-api"
     }
-    changelog = rootProject.file("CHANGELOG.md").text
     syncBodyFrom = rootProject.file("README.md").text
+
+    def changelogText = rootProject.file("CHANGELOG.md").text
+    if (changelogText.split("\n")[0].contains("${mod_name} ${version}")) {
+        changelog = changelogText
+    } else {
+        changelog = ""
+    }
 }
 
 dependencies {
