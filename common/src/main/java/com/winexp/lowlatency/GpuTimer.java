@@ -2,6 +2,7 @@ package com.winexp.lowlatency;
 
 import org.lwjgl.opengl.GL11C;
 import org.lwjgl.opengl.GL15C;
+import org.lwjgl.opengl.GL32C;
 import org.lwjgl.opengl.GL33C;
 
 import java.io.Closeable;
@@ -14,14 +15,14 @@ public class GpuTimer implements Closeable {
     private long endTime;
     private long submitTime;
 
-    public State getState() {
-        return state;
+    public static long getTimestampNow() {
+        long[] t = new long[1];
+        GL32C.glGetInteger64v(GL33C.GL_TIMESTAMP, t);
+        return t[0];
     }
 
-    public long getTimestampNow() {
-        long[] t = new long[1];
-        GL33C.glGetInteger64v(GL33C.GL_TIMESTAMP, t);
-        return t[0];
+    public State getState() {
+        return state;
     }
 
     public void recordBegin() {

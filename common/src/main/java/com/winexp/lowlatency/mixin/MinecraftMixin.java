@@ -1,7 +1,6 @@
 package com.winexp.lowlatency.mixin;
 
 import com.winexp.lowlatency.LowLatencyMod;
-import com.winexp.lowlatency.LowLatencyScheduler;
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MinecraftMixin {
     @Inject(method = "run", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;pollEvents()V"))
     private void beforePoll(CallbackInfo ci) {
-        LowLatencyScheduler.wait(LowLatencyMod.SCHEDULER);
+        LowLatencyMod.SCHEDULER.beforePoll();
     }
 
     @Inject(method = "run", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;pollEvents()V", shift = At.Shift.AFTER))

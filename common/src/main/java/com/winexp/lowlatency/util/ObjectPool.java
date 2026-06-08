@@ -4,11 +4,11 @@ import com.winexp.lowlatency.LowLatencyMod;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.ArrayDeque;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ObjectPool<T> implements Closeable {
-    private final Queue<T> pool = new ArrayDeque<>();
+    private final Queue<T> pool = new ConcurrentLinkedQueue<>();
     private final Factory<T> factory;
     private final Resetter<T> resetter;
 

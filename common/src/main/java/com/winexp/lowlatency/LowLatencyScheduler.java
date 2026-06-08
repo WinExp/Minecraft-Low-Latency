@@ -30,15 +30,17 @@ public class LowLatencyScheduler implements Closeable {
         return gpuLatencyTracker.getAverageTime();
     }
 
-    public static void wait(LowLatencyScheduler scheduler) {
-        if (!LowLatencyMod.CONFIG.enabled) return;
+    public boolean isEnabled() {
+        return LowLatencyMod.CONFIG.enabled;
+    }
 
-        LowLatencyMod.SCHEDULER.pollGpuState();
-        long waitTime = scheduler.getAverageGpuLatency()
-                - scheduler.getAverageCpuTime()
+    public void beforePoll() {
+        pollGpuState();
+        long waitTime = getAverageGpuLatency()
+                - getAverageCpuTime()
                 + (long) (LowLatencyMod.CONFIG.wait_time_bias_ms * 1_000_000);
-        waitTime = waitTime > 0 ? waitTime : 0;
-        scheduler.statistics.waitTime = waitTime;
+        waitTime = isEnabled() && waitTime > 0 ? waitTime : 0;
+        statistics.waitTime = waitTime;
         if (waitTime <= 0) return;
 
         long target = System.nanoTime() + waitTime;
@@ -59,16 +61,20 @@ public class LowLatencyScheduler implements Closeable {
         cpuTimer.startRecord();
     }
 
-    public void beforeClip() {
-        cpuTimer.endRecord();
-        cpuTimeTracker.addFrame(cpuTimer.getTimeElapsed());
-        statistics.updateFrameQueueBacklog();
-    }
-
     public void beforeRender() {
         GpuTimer gpuTimer = gpuTimerPool.borrowObject();
         gpuTimer.recordBegin();
         gpuTimerQueue.add(gpuTimer);
+    }
+
+    public void beforeClip() {
+        cpuTimer.endRecord();
+        cpuTimeTracker.addFrame(cpuTimer.getTimeElapsed());
+
+        GpuTimer currentFrameGpuTimer = gpuTimerQueue.getLast();
+        pollGpuState();
+        statistics.frameQueueBacklog = gpuTimerQueue.size();
+        if (gpuTimerQueue.contains(currentFrameGpuTimer)) statistics.frameQueueBacklog--;
     }
 
     public void afterClip() {
@@ -82,8 +88,8 @@ public class LowLatencyScheduler implements Closeable {
             GpuTimer gpuTimer = it.next();
             gpuTimer.pollResult();
             if (gpuTimer.getState() == GpuTimer.State.RESULT_AVAILABLE) {
-                statistics.gpuTimeTracker.addFrame(gpuTimer.getTimeElapsed());
                 gpuLatencyTracker.addFrame(gpuTimer.getCompletionDelay());
+                statistics.gpuTimeTracker.addFrame(gpuTimer.getTimeElapsed());
                 it.remove();
                 gpuTimerPool.returnObject(gpuTimer);
             } else break;
@@ -122,13 +128,6 @@ public class LowLatencyScheduler implements Closeable {
 
         public long getFrameQueueBacklog() {
             return frameQueueBacklog;
-        }
-
-        public void updateFrameQueueBacklog(){
-            GpuTimer lastGpuTimer = gpuTimerQueue.getLast();
-            pollGpuState();
-            frameQueueBacklog = gpuTimerQueue.size();
-            if (gpuTimerQueue.contains(lastGpuTimer)) frameQueueBacklog--;
         }
     }
 }
