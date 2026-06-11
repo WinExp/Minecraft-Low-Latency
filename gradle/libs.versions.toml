@@ -1,11 +1,10 @@
 [versions]
 # https://projects.neoforged.net/neoforged/neoform
-minecraft = "26.1.2"
 neoforge = "26.1.2.75"
 neoforged-neoform = "26.1.2-1"
 
 [libraries]
-minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
+minecraft = { module = "com.mojang:minecraft", version = "26.1.2" }
 fabric-loader = { module = "net.fabricmc:fabric-loader", version = "0.19.3" }
 fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version = "0.150.0+26.1.2" }
 mixin = { module = "org.spongepowered:mixin", version = "0.8.5" }

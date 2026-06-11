@@ -8,7 +8,7 @@ plugins {
 val mod_id: String by project
 val mod_name: String by project
 val mod_author: String by project
-val minecraft_version = libs.findVersion("minecraft").get().requiredVersion
+val minecraft_version = libs.findLibrary("minecraft").get().get().version
 val java_version: String by project
 val minecraft_version_range: String by project
 val license: String by project
@@ -16,7 +16,7 @@ val neoforge_loader_version_range: String by project
 val credits: String by project
 
 base {
-    archivesName = "${mod_id}-${name}-${libs.findLibrary("minecraft").get().get().version}"
+    archivesName = "${mod_id}-${name}-${minecraft_version}"
 }
 
 java {
