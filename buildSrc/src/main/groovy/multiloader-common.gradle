@@ -107,16 +107,3 @@ publishing {
         }
     }
 }
-
-tasks.register("modrinthAll") {
-    group = "publishing"
-    description = "Upload project to Modrinth"
-    dependsOn(project(":fabric").tasks.named("modrinth"))
-    dependsOn(project(":neoforge").tasks.named("modrinth"))
-}
-
-tasks.register("modrinthSyncBodyAll") {
-    group = "publishing"
-    description = "Sync project description to Modrinth"
-    dependsOn(project(":fabric").tasks.named("modrinthSyncBody"))
-}

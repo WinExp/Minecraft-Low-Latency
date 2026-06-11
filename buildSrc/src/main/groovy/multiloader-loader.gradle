@@ -1,5 +1,7 @@
 plugins {
     id 'multiloader-common'
+
+    id "me.modmuss50.mod-publish-plugin"
 }
 
 configurations {
@@ -42,4 +44,42 @@ tasks.named('sourcesJar', Jar) {
     from(configurations.commonJava)
     dependsOn(configurations.commonResources)
     from(configurations.commonResources)
+}
+
+publishMods {
+    def loaderName = ""
+    if (project.name == "fabric") {
+        loaderName = "Fabric"
+    } else if (project.name == "neoforge") {
+        loaderName = "NeoForge"
+    }
+
+    type = STABLE
+    file project(":${project.name}")
+    changelog = rootProject.file("CHANGELOG.md").text
+    modLoaders.add(project.name)
+    version = "${project.version}+${project.name}"
+    displayName = "[${loaderName} ${minecraft_version}] ${project.version}"
+
+    curseforge {
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        projectId = curse_project
+        client = true
+
+        minecraftVersionList("26.1, 26.1.1, 26.1.2")
+        if (project.name == "fabric") {
+            requires("fabric-api")
+        }
+    }
+
+    modrinth {
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+        projectId = modrinth_project
+        projectDescription = rootProject.file("README.md").text
+
+        minecraftVersionList("26.1, 26.1.1, 26.1.2")
+        if (project.name == "fabric") {
+            requires("fabric-api")
+        }
+    }
 }

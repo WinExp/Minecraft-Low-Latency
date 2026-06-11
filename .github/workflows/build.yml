@@ -79,14 +79,9 @@ jobs:
             echo "changed=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Sync Body to Modrinth
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
-        run: ./gradlew modrinthSyncBodyAll
-        env:
-          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-
-      - name: Publish to Modrinth
+      - name: Publish mods
         if: ${{ (github.event_name == 'workflow_dispatch' && inputs.force_publish) || (github.event_name == 'push' && github.ref == 'refs/heads/master' && steps.version-check.outputs.changed == 'true') }}
-        run: ./gradlew modrinthAll
+        run: ./gradlew publishMods
         env:
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
