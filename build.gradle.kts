@@ -1,8 +1,4 @@
 plugins {
-    // see https://fabricmc.net/develop/ for new versions
-    id("net.fabricmc.fabric-loom") version "1.16-SNAPSHOT" apply false
-    // see https://projects.neoforged.net/neoforged/moddevgradle for new versions
-    id("net.neoforged.moddev") version "2.0.141" apply false
-
-    id("me.modmuss50.mod-publish-plugin") version "2.0.0" apply false
+    alias(libs.plugins.fabric.loom) apply false
+    alias(libs.plugins.neoforged.moddev) apply false
 }
