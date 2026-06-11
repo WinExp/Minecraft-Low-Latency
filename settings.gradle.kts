@@ -5,20 +5,20 @@ pluginManagement {
         exclusiveContent {
             forRepository {
                 maven {
-                    name = 'Fabric'
-                    url = uri('https://maven.fabricmc.net')
+                    name = "Fabric"
+                    url = uri("https://maven.fabricmc.net")
                 }
             }
             filter {
-                includeGroupAndSubgroups('net.fabricmc')
+                includeGroupAndSubgroups("net.fabricmc")
             }
         }
     }
 }
 
 plugins {
-    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
-    id 'com.gradle.develocity' version '4.4.1'
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+    id("com.gradle.develocity") version "4.4.1"
 }
 
 develocity {
@@ -29,7 +29,7 @@ develocity {
 }
 
 // This should match the folder name of the project, or else IDEA may complain (see https://youtrack.jetbrains.com/issue/IDEA-317606)
-rootProject.name = 'Minecraft-Low-Latency'
-include('common')
-include('fabric')
-include('neoforge')
+rootProject.name = "Minecraft-Low-Latency"
+include("common")
+include("fabric")
+include("neoforge")
