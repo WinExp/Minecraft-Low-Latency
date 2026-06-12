@@ -1,6 +1,7 @@
 [versions]
-# https://projects.neoforged.net/neoforged/neoform
+# https://projects.neoforged.net/neoforged/neoforge
 neoforge = "26.1.2.75"
+# https://projects.neoforged.net/neoforged/neoform
 neoforged-neoform = "26.1.2-1"
 
 [libraries]

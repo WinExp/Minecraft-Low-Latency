@@ -46,8 +46,10 @@ neoForge {
     }
 }
 
-sourceSets.named("main") {
-    resources.srcDir("src/generated/resources")
+sourceSets.main {
+    resources {
+        srcDir("src/generated/resources")
+    }
 }
 
 val loaderAttribute = Attribute.of("io.github.mcgradleconventions.loader", String::class.java)

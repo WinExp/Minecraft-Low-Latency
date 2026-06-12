@@ -1,5 +1,3 @@
-import org.gradle.api.artifacts.VersionCatalogsExtension
-
 val libs = extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
 
 plugins {

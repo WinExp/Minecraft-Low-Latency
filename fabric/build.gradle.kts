@@ -39,6 +39,7 @@ listOf("apiElements", "runtimeElements", "sourcesElements", "javadocElements", "
         }
     }
 }
+
 sourceSets.configureEach {
     listOf(compileClasspathConfigurationName, runtimeClasspathConfigurationName).forEach { variant ->
         configurations.named(variant) {

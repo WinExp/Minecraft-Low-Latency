@@ -13,7 +13,7 @@
         "issues": "https://github.com/WinExp/Minecraft-Low-Latency/issues"
     },
     "license": "${license}",
-    "icon": "${mod_id}.png",
+    "icon": "assets/low_latency/icon.png",
     "environment": "client",
     "entrypoints": {
         "main": [

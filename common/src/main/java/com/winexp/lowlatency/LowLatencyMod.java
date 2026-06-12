@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.util.function.BiConsumer;
 
 public class LowLatencyMod {
-    public static final String MOD_ID = "low-latency";
+    public static final String MOD_ID = "low_latency";
     public static final String MOD_NAME = "Minecraft Low Latency";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
     public static ModConfig CONFIG;

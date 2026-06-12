@@ -16,7 +16,7 @@ val neoforge_loader_version_range: String by project
 val credits: String by project
 
 base {
-    archivesName = "${mod_id}-${name}-${minecraft_version}"
+    archivesName = "${mod_id}-${project.name}-${minecraft_version}"
 }
 
 java {
@@ -79,7 +79,7 @@ tasks.named<ProcessResources>("processResources") {
             "mod_id"                        to mod_id,
             "license"                       to license,
             "description"                   to project.description,
-            "neoforge_version"              to libs.findVersion("neoforge").get(),
+            "neoforge_version"              to libs.findVersion("neoforge").get().requiredVersion,
             "neoforge_loader_version_range" to neoforge_loader_version_range,
             "credits"                       to credits,
             "java_version"                  to java_version,
@@ -88,7 +88,7 @@ tasks.named<ProcessResources>("processResources") {
     )
 
     val jsonExpandProps = expandProps.mapValues { (_, value) ->
-        if (value is String) value.replace("\n", "\\\\n") else value
+        if (!value.isNullOrBlank()) value.replace("\n", "\\\\n") else value
     }
 
     filesMatching(listOf("META-INF/mods.toml", "META-INF/neoforge.mods.toml")) {
