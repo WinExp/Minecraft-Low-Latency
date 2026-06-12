@@ -12,6 +12,7 @@ on:
     paths-ignore:
       - 'docs/*'
       - 'README*.md'
+      - 'CHANGELOG.md'
       - 'LICENSE'
       - '.gitattributes'
       - '.gitignore'
@@ -20,6 +21,7 @@ on:
     paths-ignore:
       - 'docs/*'
       - 'README*.md'
+      - 'CHANGELOG.md'
       - 'LICENSE'
       - '.gitattributes'
       - '.gitignore'
