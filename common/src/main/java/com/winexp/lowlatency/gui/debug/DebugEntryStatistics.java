@@ -17,7 +17,7 @@ public class DebugEntryStatistics implements DebugScreenEntry {
         displayer.addToGroup(MAIN, String.format("Low latency mode: %s", status));
         displayer.addToGroup(MAIN, String.format("Average CPU time: %.4f ms", LowLatencyMod.SCHEDULER.statistics.getAverageCpuTime() / 1_000_000.0));
         displayer.addToGroup(MAIN, String.format("Average GPU time: %.4f ms", LowLatencyMod.SCHEDULER.statistics.getAverageGpuTime() / 1_000_000.0));
-        displayer.addToGroup(MAIN, String.format("Average GPU latency: %.4f ms", LowLatencyMod.SCHEDULER.statistics.getAverageGpuLatency() / 1_000_000.0));
+        displayer.addToGroup(MAIN, String.format("Average GPU completion delay: %.4f ms", LowLatencyMod.SCHEDULER.statistics.getAverageGpuLatency() / 1_000_000.0));
         displayer.addToGroup(MAIN, String.format("Wait time: %.4f ms", LowLatencyMod.SCHEDULER.statistics.getWaitTime() / 1_000_000.0));
         displayer.addToGroup(MAIN, String.format("Frame queue backlog: %d", LowLatencyMod.SCHEDULER.statistics.getFrameQueueBacklog()));
     }

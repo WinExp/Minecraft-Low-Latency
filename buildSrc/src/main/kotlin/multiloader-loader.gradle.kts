@@ -74,6 +74,7 @@ publishMods {
         if (project.name == "fabric") {
             requires("fabric-api")
         }
+        requires("cloth-config")
     }
 
     modrinth {
@@ -85,5 +86,6 @@ publishMods {
         if (project.name == "fabric") {
             requires("fabric-api")
         }
+        requires("cloth-config")
     }
 }
