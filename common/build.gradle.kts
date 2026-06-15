@@ -38,7 +38,6 @@ artifacts {
 }
 
 val loaderAttribute = Attribute.of("io.github.mcgradleconventions.loader", String::class.java)
-
 listOf("apiElements", "runtimeElements", "sourcesElements", "javadocElements").forEach { variant ->
     configurations.named(variant) {
         attributes {
