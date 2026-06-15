@@ -1,6 +1,7 @@
 {
-  "low_latency.config.title": "低延迟",
-  "low_latency.config.categories.general": "通用",
+  "low_latency.config.pages.general": "通用",
   "low_latency.config.options.enabled": "启用低延迟",
-  "low_latency.config.options.wait_time_bias": "等待时间偏移（毫秒）"
+  "low_latency.config.options.enabled.tooltip": "启用低延迟",
+  "low_latency.config.options.wait_time_bias": "等待时间偏移",
+  "low_latency.config.options.wait_time_bias.tooltip": "实验性功能，可能会导致延迟升高，帧率下降，帧时间周期性震荡等问题。"
 }

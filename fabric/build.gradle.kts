@@ -9,8 +9,6 @@ dependencies {
     minecraft(libs.minecraft)
     implementation(libs.fabric.loader)
     implementation(libs.fabric.api)
-
-    api(libs.modmenu)
 }
 
 loom {

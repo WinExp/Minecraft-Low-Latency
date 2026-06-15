@@ -74,7 +74,7 @@ publishMods {
         if (project.name == "fabric") {
             requires("fabric-api")
         }
-        optional("cloth-config")
+        optional("sodium")
     }
 
     modrinth {
@@ -86,6 +86,6 @@ publishMods {
         if (project.name == "fabric") {
             requires("fabric-api")
         }
-        optional("cloth-config")
+        optional("sodium")
     }
 }

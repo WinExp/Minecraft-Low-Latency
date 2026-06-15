@@ -42,8 +42,11 @@ repositories {
         url = uri("https://maven.blamejared.com")
     }
     maven { url = uri("https://maven.fabricmc.net/") }
-    maven { url = uri("https://maven.shedaniel.me/") }
     maven { url = uri("https://maven.terraformersmc.com/releases/") }
+    maven {
+        name = "CaffeineMC"
+        url = uri("https://maven.caffeinemc.net/releases") // or /snapshots
+    }
 }
 
 tasks.named<Jar>("sourcesJar") {

@@ -38,8 +38,8 @@ public class LowLatencyScheduler implements Closeable {
     public void beforePoll() {
         pollGpuState();
         long waitTime = getAverageGpuLatency()
-                - getAverageCpuTime()
-                + ModConfig.INSTANCE.wait_time_bias_ms * 1_000_000L;
+                - getAverageCpuTime();
+        waitTime = (long) (waitTime * (1 + ModConfig.INSTANCE.wait_time_offset));
         waitTime = isEnabled() && waitTime > 0 ? waitTime : 0;
         statistics.waitTime = waitTime;
         if (waitTime <= 0) return;

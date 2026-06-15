@@ -17,7 +17,7 @@ dependencies {
     compileOnly(libs.mixin.extras)
     annotationProcessor(libs.mixin.extras)
 
-    api(libs.cloth.config)
+    api(libs.sodium)
 }
 
 configurations {

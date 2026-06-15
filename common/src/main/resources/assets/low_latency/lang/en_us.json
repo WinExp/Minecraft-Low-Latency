@@ -1,6 +1,7 @@
 {
-  "low_latency.config.title": "Low Latency",
-  "low_latency.config.categories.general": "General",
+  "low_latency.config.pages.general": "General",
   "low_latency.config.options.enabled": "Enable low latency",
-  "low_latency.config.options.wait_time_bias": "Wait time bias (milliseconds)"
+  "low_latency.config.options.enabled.tooltip": "Enable low latency",
+  "low_latency.config.options.wait_time_bias": "Wait time offset",
+  "low_latency.config.options.wait_time_bias.tooltip": "EXPERIMENTAL feature, may cause increased latency, reduced frame rates, and periodic fluctuations in frame timing."
 }

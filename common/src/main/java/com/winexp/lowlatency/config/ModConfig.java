@@ -14,7 +14,7 @@ public class ModConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public boolean enabled = true;
-    public int wait_time_bias_ms = 0;
+    public double wait_time_offset = 0;
 
     static {
         ModConfig config;

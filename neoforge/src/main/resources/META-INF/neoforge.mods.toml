@@ -12,10 +12,14 @@ logoFile="assets/low_latency/icon.png" #optional
 credits="${credits}" #optional
 authors = "${mod_author}" #optional
 description = '''${description}''' #mandatory (Supports multiline text)
+
 [[mixins]]
 config = "${mod_id}.mixins.json"
 [[mixins]]
 config = "${mod_id}.neoforge.mixins.json"
+
+[modproperties.${mod_id}]
+"sodium:config_api_user" = "com.winexp.lowlatency.config.ModConfigBuilder"
 
 [[dependencies.${mod_id}]] #optional
 modId = "neoforge" #mandatory
