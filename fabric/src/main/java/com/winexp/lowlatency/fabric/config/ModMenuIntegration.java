@@ -2,12 +2,17 @@ package com.winexp.lowlatency.fabric.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
-import com.winexp.lowlatency.config.ModConfig;
-import me.shedaniel.autoconfig.AutoConfigClient;
+import com.terraformersmc.modmenu.util.NullScreenFactory;
+import com.winexp.lowlatency.config.ModConfigScreen;
+import com.winexp.lowlatency.platform.Services;
 
 public class ModMenuIntegration implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return parent -> AutoConfigClient.getConfigScreen(ModConfig.class, parent).get();
+        if (Services.PLATFORM.isModLoaded("cloth-config"))  {
+            return ModConfigScreen::create;
+        } else {
+            return new NullScreenFactory<>();
+        }
     }
 }

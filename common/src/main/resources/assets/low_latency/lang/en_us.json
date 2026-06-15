@@ -1,5 +1,6 @@
 {
-  "text.autoconfig.low_latency.title": "Low Latency",
-  "text.autoconfig.low_latency.option.enabled": "Enable low latency",
-  "text.autoconfig.low_latency.option.wait_time_bias_ms": "Wait time bias (milliseconds)"
+  "low_latency.config.title": "Low Latency",
+  "low_latency.config.categories.general": "General",
+  "low_latency.config.options.enabled": "Enable low latency",
+  "low_latency.config.options.wait_time_bias": "Wait time bias (milliseconds)"
 }

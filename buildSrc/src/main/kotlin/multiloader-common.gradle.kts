@@ -82,9 +82,7 @@ tasks.processResources {
             "neoforge_version"              to libs.findVersion("neoforge").get().requiredVersion,
             "neoforge_loader_version_range" to neoforge_loader_version_range,
             "credits"                       to credits,
-            "java_version"                  to java_version,
-
-            "cloth_config_version"          to libs.findLibrary("cloth-config").get().get().version
+            "java_version"                  to java_version
     )
 
     val jsonExpandProps = expandProps.mapValues { (_, value) ->

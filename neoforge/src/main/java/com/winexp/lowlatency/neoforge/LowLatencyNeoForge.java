@@ -1,8 +1,8 @@
 package com.winexp.lowlatency.neoforge;
 
 import com.winexp.lowlatency.LowLatencyMod;
-import com.winexp.lowlatency.config.ModConfig;
-import me.shedaniel.autoconfig.AutoConfigClient;
+import com.winexp.lowlatency.config.ModConfigScreen;
+import com.winexp.lowlatency.platform.Services;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -14,7 +14,10 @@ import net.neoforged.neoforge.common.NeoForge;
 @Mod(LowLatencyMod.MOD_ID)
 public class LowLatencyNeoForge {
     public LowLatencyNeoForge(IEventBus eventBus, ModContainer modContainer) {
-        modContainer.registerExtensionPoint(IConfigScreenFactory.class, (_, parent) -> AutoConfigClient.getConfigScreen(ModConfig.class, parent).get());
+        if (Services.PLATFORM.isModLoaded("cloth_config")) {
+            modContainer.registerExtensionPoint(IConfigScreenFactory.class,
+                    (_, parent) -> ModConfigScreen.create(parent));
+        }
         LowLatencyMod.init();
         eventBus.addListener(RegisterDebugEntriesEvent.class, event ->
                 LowLatencyMod.registerDebugScreenEntries(event::register));

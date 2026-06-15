@@ -1,5 +1,6 @@
 {
-  "text.autoconfig.low_latency.title": "低延迟",
-  "text.autoconfig.low_latency.option.enabled": "启用低延迟",
-  "text.autoconfig.low_latency.option.wait_time_bias_ms": "等待时间偏移（毫秒）"
+  "low_latency.config.title": "低延迟",
+  "low_latency.config.categories.general": "通用",
+  "low_latency.config.options.enabled": "启用低延迟",
+  "low_latency.config.options.wait_time_bias": "等待时间偏移（毫秒）"
 }

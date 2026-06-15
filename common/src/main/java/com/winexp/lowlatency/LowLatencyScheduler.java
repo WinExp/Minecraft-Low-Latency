@@ -1,5 +1,6 @@
 package com.winexp.lowlatency;
 
+import com.winexp.lowlatency.config.ModConfig;
 import com.winexp.lowlatency.util.ObjectPool;
 
 import java.io.Closeable;
@@ -31,14 +32,14 @@ public class LowLatencyScheduler implements Closeable {
     }
 
     public boolean isEnabled() {
-        return LowLatencyMod.CONFIG.enabled;
+        return ModConfig.INSTANCE.enabled;
     }
 
     public void beforePoll() {
         pollGpuState();
         long waitTime = getAverageGpuLatency()
                 - getAverageCpuTime()
-                + (long) (LowLatencyMod.CONFIG.wait_time_bias_ms * 1_000_000);
+                + ModConfig.INSTANCE.wait_time_bias_ms * 1_000_000L;
         waitTime = isEnabled() && waitTime > 0 ? waitTime : 0;
         statistics.waitTime = waitTime;
         if (waitTime <= 0) return;

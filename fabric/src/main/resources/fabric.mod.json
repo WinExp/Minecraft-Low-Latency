@@ -31,12 +31,10 @@
         "fabricloader": ">=${fabric_loader_version}",
         "fabric-api": "*",
         "minecraft": "~${minecraft_version}",
-        "java": ">=${java_version}",
-
-        "cloth-config": ">=${cloth_config_version}"
+        "java": ">=${java_version}"
     },
     "suggests": {
-        "another-mod": "*"
+        "cloth-config": "*"
     }
 }
   
