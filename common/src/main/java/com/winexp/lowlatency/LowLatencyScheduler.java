@@ -42,8 +42,8 @@ public class LowLatencyScheduler implements Closeable {
         waitTime = (long) (waitTime * (1 + ModConfig.INSTANCE.wait_time_offset));
         waitTime = isEnabled() && waitTime > 0 ? waitTime : 0;
         statistics.waitTime = waitTime;
-        if (waitTime <= 0) return;
 
+        if (waitTime <= 0) return;
         long target = System.nanoTime() + waitTime;
         while (true) {
             long remaining = target - System.nanoTime();
