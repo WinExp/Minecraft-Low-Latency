@@ -2,10 +2,9 @@ val libs = extensions.getByType(VersionCatalogsExtension::class.java).named("lib
 
 plugins {
     java
+    id("multiloader-common")
     id("me.modmuss50.mod-publish-plugin")
 }
-
-pluginManager.apply("multiloader-common")
 
 val curse_project: String by project
 val modrinth_project: String by project
