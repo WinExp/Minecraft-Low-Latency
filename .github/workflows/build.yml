@@ -82,7 +82,7 @@ jobs:
           fi
 
       - name: Publish mods
-        if: ${{ (github.event_name == 'workflow_dispatch' && inputs.force_publish) || (github.event_name == 'push' && github.ref == 'refs/heads/master' && steps.version-check.outputs.changed == 'true') }}
+        if: ${{ (github.event_name == 'workflow_dispatch' && inputs.force_publish) || (github.event_name == 'push' && steps.version-check.outputs.changed == 'true') }}
         run: ./gradlew publishMods
         env:
           CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
