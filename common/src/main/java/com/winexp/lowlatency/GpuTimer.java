@@ -1,10 +1,8 @@
 package com.winexp.lowlatency;
 
-import java.io.Closeable;
-
 import static org.lwjgl.opengl.GL33C.*;
 
-public class GpuTimer implements Closeable {
+public class GpuTimer implements AutoCloseable {
     private final int beginQuery = glGenQueries();
     private final int endQuery = glGenQueries();
     private State state = State.IDLE;

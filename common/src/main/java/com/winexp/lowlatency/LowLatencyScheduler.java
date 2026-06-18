@@ -3,13 +3,12 @@ package com.winexp.lowlatency;
 import com.winexp.lowlatency.config.ModConfig;
 import com.winexp.lowlatency.util.ObjectPool;
 
-import java.io.Closeable;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.concurrent.locks.LockSupport;
 
-public class LowLatencyScheduler implements Closeable {
+public class LowLatencyScheduler implements AutoCloseable {
     private static final int FRAME_SAMPLING_WINDOW = 6;
     private static final long WAIT_SPIN_THRESHOLD = 500_000;
 

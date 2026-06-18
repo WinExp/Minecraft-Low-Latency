@@ -2,12 +2,10 @@ package com.winexp.lowlatency.util;
 
 import com.winexp.lowlatency.LowLatencyMod;
 
-import java.io.Closeable;
-import java.io.IOException;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class ObjectPool<T> implements Closeable {
+public class ObjectPool<T> implements AutoCloseable {
     private final Queue<T> pool = new ConcurrentLinkedQueue<>();
     private final Factory<T> factory;
     private final Resetter<T> resetter;
@@ -34,12 +32,12 @@ public class ObjectPool<T> implements Closeable {
 
     @Override
     public void close() {
-        if (pool.peek() instanceof Closeable) {
+        if (pool.peek() instanceof AutoCloseable) {
             while (!pool.isEmpty()) {
                 T obj = pool.poll();
                 try {
-                    ((Closeable) obj).close();
-                } catch (IOException e) {
+                    ((AutoCloseable) obj).close();
+                } catch (Exception e) {
                     LowLatencyMod.LOGGER.error("Error while closing object", e);
                 }
             }
