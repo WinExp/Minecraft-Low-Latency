@@ -12,10 +12,14 @@ This mod estimates input latency based on historical CPU and GPU frame times, an
 
 You can enable/disable low latency feature in config menu.
 
+### Plans
+
+- [ ] Blaze3D support (26.2)
+
 #### Config menu
 
-![Config menu](https://raw.githubusercontent.com/WinExp/Minecraft-Low-Latency/refs/heads/master/docs/images/config_menu.png)
+![Config menu](https://github.com/WinExp/Minecraft-Low-Latency/blob/HEAD/docs/images/config_menu.png?raw=true)
 
 #### F3 debug screen
 
-![F3 debug screen](https://raw.githubusercontent.com/WinExp/Minecraft-Low-Latency/refs/heads/master/docs/images/debug_screen.png)
+![F3 debug screen](https://github.com/WinExp/Minecraft-Low-Latency/blob/HEAD/docs/images/debug_screen.png?raw=true)

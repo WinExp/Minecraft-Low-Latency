@@ -10,10 +10,14 @@
 
 你可以在配置菜单中开启/关闭低延迟功能。
 
+### 规划
+
+- [ ] Blaze3D 支持 (26.2)
+
 #### 配置菜单
 
-![配置菜单](https://raw.githubusercontent.com/WinExp/Minecraft-Low-Latency/refs/heads/master/docs/images/config_menu.png)
+![配置菜单](https://github.com/WinExp/Minecraft-Low-Latency/blob/HEAD/docs/images/config_menu.png?raw=true)
 
-#### F3 调试屏幕
+#### F3 调试界面
 
-![F3 屏幕](https://raw.githubusercontent.com/WinExp/Minecraft-Low-Latency/refs/heads/master/docs/images/debug_screen.png)
+![F3 调试界面](https://github.com/WinExp/Minecraft-Low-Latency/blob/HEAD/docs/images/debug_screen.png?raw=true)
