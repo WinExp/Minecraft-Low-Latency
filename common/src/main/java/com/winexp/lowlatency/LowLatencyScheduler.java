@@ -27,7 +27,9 @@ public class LowLatencyScheduler implements AutoCloseable {
     }
 
     private long getEstimatedGpuLatency() {
-        long estimated = getAverageGpuTime() * frameTimer.getAwaitingCount() - getAverageCpuTime();
+        long estimated =
+                (long) (getAverageGpuTime() * (frameTimer.getAwaitingCount() + ModConfig.INSTANCE.wait_time_offset))
+                - getAverageCpuTime();
         return estimated <= 0 ? 0 : estimated;
     }
 
