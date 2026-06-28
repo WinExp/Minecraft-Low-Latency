@@ -12,8 +12,8 @@
 
 #### 配置菜单
 
-![配置菜单](https://raw.githubusercontent.com/WinExp/Minecraft-Low-Latency/refs/heads/master/docs/images/config_menu.png)
+![配置菜单](https://github.com/WinExp/Minecraft-Low-Latency/blob/HEAD/docs/images/config_menu.png?raw=true)
 
 #### F3 调试屏幕
 
-![F3 屏幕](https://raw.githubusercontent.com/WinExp/Minecraft-Low-Latency/refs/heads/master/docs/images/debug_screen.png)
+![F3 屏幕](https://github.com/WinExp/Minecraft-Low-Latency/blob/HEAD/docs/images/debug_screen.png?raw=true)
