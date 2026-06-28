@@ -4,11 +4,11 @@ public class CpuTimer {
     private long startTime = System.nanoTime();
     private long endTime = System.nanoTime();
 
-    public void startRecord() {
+    public void start() {
         startTime = System.nanoTime();
     }
 
-    public void endRecord() {
+    public void stop() {
         endTime = System.nanoTime();
     }
 

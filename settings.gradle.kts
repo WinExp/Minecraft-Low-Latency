@@ -30,6 +30,7 @@ develocity {
 
 // This should match the folder name of the project, or else IDEA may complain (see https://youtrack.jetbrains.com/issue/IDEA-317606)
 rootProject.name = "Minecraft-Low-Latency"
+includeBuild("build-logic")
 include("common")
 include("fabric")
 include("neoforge")

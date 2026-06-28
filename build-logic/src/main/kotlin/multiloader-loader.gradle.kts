@@ -6,14 +6,14 @@ plugins {
     id("me.modmuss50.mod-publish-plugin")
 }
 
-val curse_project: String by project
-val modrinth_project: String by project
-val minecraft_version = libs.findLibrary("minecraft").get().get().version
+val curseProject = property("curse_project") as String
+val modrinthProject = property("modrinth_project") as String
+val minecraftVersion = libs.findLibrary("minecraft").get().get().version
 
-val commonJava by configurations.creating {
+val commonJava = configurations.create("commonJava") {
     isCanBeResolved = true
 }
-val commonResources by configurations.creating {
+val commonResources = configurations.create("commonResources") {
     isCanBeResolved = true
 }
 
@@ -57,16 +57,16 @@ publishMods {
         else -> ""
     }
 
-    type.set(STABLE)
+    type.set(ALPHA)
     file(project(":${project.name}"))
     changelog = rootProject.file("CHANGELOG.md").readText()
     modLoaders.add(project.name)
     version = "${project.version}+${project.name}"
-    displayName = "[${loaderName} ${minecraft_version}] ${project.version}"
+    displayName = "[${loaderName} ${minecraftVersion}] ${project.version}"
 
     curseforge {
         accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
-        projectId = curse_project
+        projectId = curseProject
         client = true
 
         minecraftVersionList("26.1, 26.1.1, 26.1.2")
@@ -78,7 +78,7 @@ publishMods {
 
     modrinth {
         accessToken = providers.environmentVariable("MODRINTH_TOKEN")
-        projectId = modrinth_project
+        projectId = modrinthProject
         projectDescription = rootProject.file("README.md").readText()
 
         minecraftVersionList("26.1, 26.1.1, 26.1.2")

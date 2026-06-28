@@ -12,7 +12,7 @@ public class LowLatencyMod {
     public static final String MOD_NAME = "Minecraft Low Latency";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
 
-    public static final LowLatencyScheduler SCHEDULER = new LowLatencyScheduler();
+    public static LowLatencyScheduler SCHEDULER;
     public static final Identifier STATISTICS_DEBUG_ENTRY = asResource("statistics");
 
     public static void init() {

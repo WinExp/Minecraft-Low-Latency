@@ -4,10 +4,11 @@ import com.google.common.collect.Iterators;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongComparators;
 
-import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class FrameTimeTracker {
-    private final ArrayDeque<Long> queue = new ArrayDeque<>();
+    private final Deque<Long> queue = new ConcurrentLinkedDeque<>();
     private final int window;
 
     public FrameTimeTracker(int window) {

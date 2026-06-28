@@ -1,9 +1,9 @@
 plugins {
-    `multiloader-loader`
+    id("multiloader-loader")
     alias(libs.plugins.fabric.loom)
 }
 
-val mod_id: String by project
+val modId = property("mod_id") as String
 
 dependencies {
     minecraft(libs.minecraft)
@@ -12,7 +12,7 @@ dependencies {
 }
 
 loom {
-    val aw = project(":common").file("src/main/resources/${mod_id}.accesswidener")
+    val aw = project(":common").file("src/main/resources/${modId}.accesswidener")
     if (aw.exists()) {
         accessWidenerPath.set(aw)
     }
@@ -20,16 +20,16 @@ loom {
         listOf("client" to "Fabric Client", "server" to "Fabric Server").forEach { (runType, configNameStr) ->
             named(runType) {
                 if (runType == "client") client() else server()
-                configName = configNameStr
-                ideConfigGenerated(true)
-                runDir("runs/$runType")
+                displayName = configNameStr
+                generateRunConfig = true
+                runDirectory.set(file("runs/$runType"))
             }
         }
     }
 }
 
 val loaderAttribute = Attribute.of("io.github.mcgradleconventions.loader", String::class.java)
-listOf("apiElements", "runtimeElements", "sourcesElements", "javadocElements", "includeInternal", "modCompileClasspath").forEach { variant ->
+listOf("apiElements", "runtimeElements", "sourcesElements", "javadocElements", "modCompileClasspath").forEach { variant ->
     configurations.named(variant) {
         attributes {
             attribute(loaderAttribute, "fabric")
