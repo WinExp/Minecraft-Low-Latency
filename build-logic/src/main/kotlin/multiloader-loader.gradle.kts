@@ -69,7 +69,7 @@ publishMods {
         projectId = curseProject
         client = true
 
-        minecraftVersionList("26.1, 26.1.1, 26.1.2")
+        minecraftVersionList("26.2")
         if (project.name == "fabric") {
             requires("fabric-api")
         }
@@ -81,7 +81,7 @@ publishMods {
         projectId = modrinthProject
         projectDescription = rootProject.file("README.md").readText()
 
-        minecraftVersionList("26.1, 26.1.1, 26.1.2")
+        minecraftVersionList("26.2")
         if (project.name == "fabric") {
             requires("fabric-api")
         }
